@@ -17,7 +17,7 @@ def generate_params():
         "gravity": 9.81,
         "num_spokes": 6,
         "spoke_length": 1,
-        "downhill_inc": np.deg2rad(10)
+        "downhill_inc": np.deg2rad(20)
     }
     params["alpha"] = np.pi/params["num_spokes"]
 
