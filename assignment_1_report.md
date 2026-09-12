@@ -99,7 +99,7 @@ This represents stable rolling because the post-impact angular velocity is appro
 
 To determine the local stability of this roll, the post-impact angular velocity was perturbed slightly above and below the fixed point. The slope of the return map near the fixed point was approximated using
 
-$$\lambda \approx \frac{P(\dot{\theta}^{*}+\delta)-P(\dot{\theta}^{*}-\delta)}{2\delta}$$
+$$\lambda \approx \frac{P(\dot{\theta}^{\ast}+\delta)-P(\dot{\theta}^{\ast}-\delta)}{2\delta}$$
 
 Using a perturbation of $\delta = 0.01\$ rad/s gave a Floquet multiplier of approximately
 
