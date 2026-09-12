@@ -117,7 +117,7 @@ def calculate_return_map(omega_inputs, params):
 
     return np.array(omega_outputs)
 
-def plot_roa(theta_values, omega_values, roa, title):
+def plot_roa(theta_values, omega_values, roa, title, filename):
 
     plt.figure()
     plt.imshow(roa, origin="lower", aspect="auto",
@@ -163,63 +163,63 @@ def calculate_floquet(fixed_omega, params):
 # ==================================================
 params = model.generate_params()
 
-# Brute Force RoA Estimation
-theta_values = np.linspace(params["downhill_inc"] - params["alpha"],
-    params["downhill_inc"] + params["alpha"], 25)
+# # Brute Force RoA Estimation
+# theta_values = np.linspace(params["downhill_inc"] - params["alpha"],
+#     params["downhill_inc"] + params["alpha"], 25)
 
-omega_values = np.linspace(0.1, 2.0, 25)
-roa = calculate_roa(theta_values, omega_values, params)
+# omega_values = np.linspace(0.1, 2.0, 25)
+# roa = calculate_roa(theta_values, omega_values, params)
 
-# Poincare Return Map
+# # Poincare Return Map
 
-omega_inputs = np.linspace(0.1, 2.5, 100)
-omega_outputs = calculate_return_map(omega_inputs, params)
-fixed_omega = find_fixed_point(omega_inputs,omega_outputs)
-floquet = calculate_floquet(fixed_omega,params)
+# omega_inputs = np.linspace(0.1, 2.5, 100)
+# omega_outputs = calculate_return_map(omega_inputs, params)
+# fixed_omega = find_fixed_point(omega_inputs,omega_outputs)
+# floquet = calculate_floquet(fixed_omega,params)
 
-print("Fixed point:", fixed_omega)
-print("Floquet multiplier:", floquet)
+# print("Fixed point:", fixed_omega)
+# print("Floquet multiplier:", floquet)
 
-# Limit cycle
-theta_cycle, omega_cycle = limit_cycle(fixed_omega, params)
+# # Limit cycle
+# theta_cycle, omega_cycle = limit_cycle(fixed_omega, params)
 
-# plot RoA
-plt.figure()
+# # plot RoA
+# plt.figure()
 
-plt.imshow(roa, origin="lower", aspect="auto", extent=[theta_values[0], theta_values[-1],
-        omega_values[0], omega_values[-1]], vmin=0, vmax=1)
+# plt.imshow(roa, origin="lower", aspect="auto", extent=[theta_values[0], theta_values[-1],
+#         omega_values[0], omega_values[-1]], vmin=0, vmax=1)
 
-cbar = plt.colorbar(ticks=[0, 1])
-cbar.ax.set_yticklabels(["Failure", "Stable Rolling"])
+# cbar = plt.colorbar(ticks=[0, 1])
+# cbar.ax.set_yticklabels(["Failure", "Stable Rolling"])
 
-plt.plot(theta_cycle, omega_cycle, "k-", linewidth=2, label="Stable Limit Cycle")
+# plt.plot(theta_cycle, omega_cycle, "k-", linewidth=2, label="Stable Limit Cycle")
 
-plt.plot(params["downhill_inc"] - params["alpha"], fixed_omega, "ko", label="Poincare Fixed Point")
+# plt.plot(params["downhill_inc"] - params["alpha"], fixed_omega, "ko", label="Poincare Fixed Point")
 
-plt.xlabel("Initial Angle (rad)")
-plt.ylabel("Initial Angular Velocity (rad/s)")
-plt.title("Region of Attraction and Stable Limit Cycle")
+# plt.xlabel("Initial Angle (rad)")
+# plt.ylabel("Initial Angular Velocity (rad/s)")
+# plt.title("Region of Attraction and Stable Limit Cycle")
 
-plt.legend()
-plt.tight_layout()
-plt.savefig("plots/roa_limit_cycle.png", dpi=300)
-plt.close()
+# plt.legend()
+# plt.tight_layout()
+# plt.savefig("plots/roa_limit_cycle.png", dpi=300)
+# plt.close()
 
-# plot return map
-plt.figure()
+# # plot return map
+# plt.figure()
 
-plt.plot(omega_inputs, omega_outputs, label="Return Map")
-plt.plot(omega_inputs, omega_inputs, "--", label="Identity")
-plt.plot(fixed_omega, fixed_omega, "ko", label=f"Fixed Point = {fixed_omega:.2f} rad/s")
+# plt.plot(omega_inputs, omega_outputs, label="Return Map")
+# plt.plot(omega_inputs, omega_inputs, "--", label="Identity")
+# plt.plot(fixed_omega, fixed_omega, "ko", label=f"Fixed Point = {fixed_omega:.2f} rad/s")
 
-plt.xlabel("Current Post-Impact Angular Velocity (rad/s)")
-plt.ylabel("Next Post-Impact Angular Velocity (rad/s)")
-plt.title("Poincare Return Map")
+# plt.xlabel("Current Post-Impact Angular Velocity (rad/s)")
+# plt.ylabel("Next Post-Impact Angular Velocity (rad/s)")
+# plt.title("Poincare Return Map")
 
-plt.legend()
-plt.tight_layout()
-plt.savefig("plots/poincare_return_map.png", dpi=300)
-plt.close()
+# plt.legend()
+# plt.tight_layout()
+# plt.savefig("plots/poincare_return_map.png", dpi=300)
+# plt.close()
 
 # Slope Effects
 
@@ -314,473 +314,3 @@ plt.savefig("plots/floquet_vs_spokes.png", dpi=300)
 plt.close()
 
 print("simulation complete")
-
-
-
-
-# test_omega = 1.5
-
-# next_omega = one_step_return(
-#     test_omega,
-#     params
-# )
-
-# print("Current omega:", test_omega)
-# print("Next omega:", next_omega)
-
-
-# theta_values = np.linspace(
-#     params["downhill_inc"] - params["alpha"],
-#     params["downhill_inc"] + params["alpha"],
-#     50
-# )
-
-# omega_values = np.linspace(0.1, 2.0, 50)
-
-# roa = np.zeros((len(omega_values), len(theta_values)))
-
-# for i, omega in enumerate(omega_values):
-#     for j, theta in enumerate(theta_values):
-
-#         initial_state = np.array([theta, omega])
-
-#         roa[i, j] = test_initial_state(
-#             initial_state,
-#             params
-#         )
-
-# state = np.array([
-#     params["downhill_inc"] - params["alpha"],
-#     2.0
-# ])
-
-# print(test_initial_state(state, params))
-
-# dt = 1e-4
-# sim_time = 5.0
-
-# time = np.arange(0, sim_time, dt)
-# state_traj = np.zeros((2, len(time)))
-# state_traj[:, 0] = state
-
-# for i, t in enumerate(time[:-1]):
-
-#     state = integrator.integrate(
-#         model.dynamics,
-#         t,
-#         state,
-#         dt,
-#         params
-#     )
-
-#     if model.detect_impact(state, params):
-#         state = model.reset_impact(state, params)
-
-#     state_traj[:, i + 1] = state
-
-
-# # plot angle
-# plt.figure()
-# plt.plot(time, state_traj[0, :])
-# plt.xlabel("Time (s)")
-# plt.ylabel("Angle (rad)")
-# plt.title("Rimless Wheel Angle")
-# plt.tight_layout()
-# plt.show()
-
-# # plot angular velocity
-# plt.figure()
-# plt.plot(time, state_traj[1, :])
-# plt.xlabel("Time (s)")
-# plt.ylabel("Angular Velocity (rad/s)")
-# plt.title("Rimless Wheel Angular Velocity")
-# plt.tight_layout()
-# plt.show()
-
-# # plot RoA grid
-# plt.figure()
-
-# plt.contourf(
-#     theta_values,
-#     omega_values,
-#     roa,
-#     levels=[-0.5, 0.5, 1.5]
-# )
-
-# plt.contour(
-#     theta_values,
-#     omega_values,
-#     roa,
-#     levels=[0.5]
-# )
-
-# plt.xlabel("Initial Angle (rad)")
-# plt.ylabel("Initial Angular Velocity (rad/s)")
-# plt.title("Region of Attraction")
-# plt.tight_layout()
-# plt.show()
-
-
-# omega_inputs = np.linspace(0.1, 2.5, 100)
-
-# omega_outputs = []
-
-# for omega in omega_inputs:
-
-#     next_omega = one_step_return(
-#         omega,
-#         params
-#     )
-
-#     if next_omega is None:
-#         omega_outputs.append(np.nan)
-#     else:
-#         omega_outputs.append(next_omega)
-
-# omega_outputs = np.array(omega_outputs)
-
-# valid = ~np.isnan(omega_outputs)
-
-# difference = np.abs(
-#     omega_outputs[valid] - omega_inputs[valid]
-# )
-
-# fixed_index = np.argmin(difference)
-
-# fixed_omega = omega_inputs[valid][fixed_index]
-
-# print("Fixed point:", fixed_omega)
-
-# delta = 0.01
-
-# omega_minus = fixed_omega - delta
-# omega_plus = fixed_omega + delta
-
-# return_minus = one_step_return(
-#     omega_minus,
-#     params
-# )
-
-# return_plus = one_step_return(
-#     omega_plus,
-#     params
-# )
-
-# print("Below fixed point:", omega_minus, "->", return_minus)
-# print("Above fixed point:", omega_plus, "->", return_plus)
-
-# floquet = (
-#     return_plus - return_minus
-# ) / (
-#     omega_plus - omega_minus
-# )
-
-# print("Floquet multiplier:", floquet)
-
-# # poincare map
-# plt.figure()
-
-# plt.plot(
-#     omega_inputs,
-#     omega_outputs,
-#     label="Return Map"
-# )
-
-# plt.plot(
-#     omega_inputs,
-#     omega_inputs,
-#     "--",
-#     label="Identity"
-# )
-
-# plt.plot(
-#     fixed_omega,
-#     fixed_omega,
-#     "ko",
-#     label=f"Fixed Point = {fixed_omega:.2f} rad/s"
-# )
-
-# plt.xlabel("Current Post-Impact Angular Velocity (rad/s)")
-# plt.ylabel("Next Post-Impact Angular Velocity (rad/s)")
-# plt.title("Poincare Return Map")
-# plt.legend()
-# plt.tight_layout()
-# plt.show()
-
-# slope_values = np.deg2rad([10, 15, 20, 25, 30])
-
-# floquet_slopes = []
-# fixed_points_slopes = []
-
-# for slope in slope_values:
-
-#     params = model.generate_params()
-#     params["downhill_inc"] = slope
-
-#     print("Slope:", round(np.rad2deg(slope)))
-
-#     theta_values = np.linspace(
-#         params["downhill_inc"] - params["alpha"],
-#         params["downhill_inc"] + params["alpha"],
-#         25
-#     )
-
-#     omega_values = np.linspace(0.1, 2.0, 25)
-
-#     roa = np.zeros((len(omega_values), len(theta_values)))
-
-#     for i, omega in enumerate(omega_values):
-#         for j, theta in enumerate(theta_values):
-
-#             initial_state = np.array([
-#                 theta,
-#                 omega
-#             ])
-
-#             roa[i, j] = test_initial_state(
-#                 initial_state,
-#                 params
-#             )
-
-#     omega_inputs = np.linspace(0.1, 2.5, 100)
-
-#     omega_outputs = []
-
-#     for omega in omega_inputs:
-
-#         next_omega = one_step_return(
-#             omega,
-#             params
-#         )
-
-#         if next_omega is None:
-#             omega_outputs.append(np.nan)
-#         else:
-#             omega_outputs.append(next_omega)
-
-#     omega_outputs = np.array(omega_outputs)
-
-#     fixed_index = np.nanargmin(
-#         np.abs(omega_outputs - omega_inputs)
-#     )
-
-#     fixed_omega = omega_inputs[fixed_index]
-
-#     delta = 0.01
-
-#     return_minus = one_step_return(
-#         fixed_omega - delta,
-#         params
-#     )
-
-#     return_plus = one_step_return(
-#         fixed_omega + delta,
-#         params
-#     )
-
-#     plt.figure()
-
-#     plt.contourf(
-#         theta_values,
-#         omega_values,
-#         roa,
-#         levels=[-0.5, 0.5, 1.5]
-#     )
-
-#     plt.contour(
-#         theta_values,
-#         omega_values,
-#         roa,
-#         levels=[0.5]
-#     )
-
-#     plt.xlabel("Initial Angle (rad)")
-#     plt.ylabel("Initial Angular Velocity (rad/s)")
-#     plt.title(
-#         f"Region of Attraction, Slope = {np.rad2deg(slope):.0f} deg"
-#     )
-
-#     plt.tight_layout()
-#     plt.show()
-
-#     if return_minus is None or return_plus is None:
-
-#         floquet_slopes.append(np.nan)
-#         fixed_points_slopes.append(np.nan)
-
-#         print(
-#             round(np.rad2deg(slope), 1),
-#             "No stable rolling fixed point"
-#         )
-
-#         continue
-
-#     floquet = (
-#         return_plus - return_minus
-#     ) / (2 * delta)
-
-#     fixed_points_slopes.append(fixed_omega)
-#     floquet_slopes.append(floquet)
-
-#     print(
-#         round(np.rad2deg(slope), 1),
-#         fixed_omega,
-#         floquet
-#     )
-
-
-# plt.figure()
-
-# plt.plot(
-#     np.rad2deg(slope_values),
-#     floquet_slopes,
-#     "o-"
-# )
-
-# plt.xlabel("Slope (deg)")
-# plt.ylabel("Floquet Multiplier")
-# plt.title("Floquet Multiplier vs. Slope")
-# plt.tight_layout()
-# plt.show()
-
-# num_spokes_values = range(6, 13)
-
-# floquet_spokes = []
-# fixed_points_spokes = []
-
-# for num_spokes in num_spokes_values:
-
-#     params = model.generate_params()
-
-#     params["num_spokes"] = num_spokes
-#     params["alpha"] = np.pi / num_spokes
-
-#     theta_values = np.linspace(
-#     params["downhill_inc"] - params["alpha"],
-#     params["downhill_inc"] + params["alpha"],
-#     15
-#     )
-
-#     omega_values = np.linspace(0.1, 4.0, 15)
-
-#     roa = np.zeros((len(omega_values), len(theta_values)))
-
-#     for i, omega in enumerate(omega_values):
-#         for j, theta in enumerate(theta_values):
-
-#             initial_state = np.array([
-#                 theta,
-#                 omega
-#             ])
-
-#             roa[i, j] = test_initial_state(
-#                 initial_state,
-#                 params
-#             )
-
-#     plt.figure()
-
-#     plt.contourf(
-#         theta_values,
-#         omega_values,
-#         roa,
-#         levels=[-0.5, 0.5, 1.5]
-#     )
-
-#     plt.contour(
-#         theta_values,
-#         omega_values,
-#         roa,
-#         levels=[0.5]
-#     )
-
-#     plt.xlabel("Initial Angle (rad)")
-#     plt.ylabel("Initial Angular Velocity (rad/s)")
-#     plt.title(
-#         f"Region of Attraction, Spokes = {num_spokes}"
-#     )
-
-#     plt.tight_layout()
-#     plt.show()
-
-#     print(
-#         "Number of spokes:",
-#         num_spokes,
-#         "Alpha:",
-#         params["alpha"]
-#     )
-
-#     omega_inputs = np.linspace(0.1, 5.0, 100)
-
-#     omega_outputs = []
-
-#     for omega in omega_inputs:
-
-#         next_omega = one_step_return(
-#             omega,
-#             params
-#         )
-
-#         if next_omega is None:
-#             omega_outputs.append(np.nan)
-#         else:
-#             omega_outputs.append(next_omega)
-
-#     omega_outputs = np.array(omega_outputs)
-
-#     fixed_index = np.nanargmin(
-#         np.abs(omega_outputs - omega_inputs)
-#     )
-
-#     fixed_omega = omega_inputs[fixed_index]
-
-#     delta = 0.01
-
-#     return_minus = one_step_return(
-#         fixed_omega - delta,
-#         params
-#     )
-
-#     return_plus = one_step_return(
-#         fixed_omega + delta,
-#         params
-#     )
-
-#     if return_minus is None or return_plus is None:
-
-#         floquet_spokes.append(np.nan)
-#         fixed_points_spokes.append(np.nan)
-
-#         print(
-#             num_spokes,
-#             "No stable rolling fixed point"
-#         )
-
-#         continue
-
-#     floquet = (
-#         return_plus - return_minus
-#     ) / (2 * delta)
-
-#     fixed_points_spokes.append(fixed_omega)
-#     floquet_spokes.append(floquet)
-
-#     print(
-#         num_spokes,
-#         fixed_omega,
-#         floquet
-#     )
-
-# plt.figure()
-
-# plt.plot(
-#     num_spokes_values,
-#     floquet_spokes,
-#     "o-"
-# )
-
-# plt.xlabel("Number of Spokes")
-# plt.ylabel("Floquet Multiplier")
-# plt.title("Floquet Multiplier vs. Number of Spokes")
-# plt.tight_layout()
-# plt.show()
