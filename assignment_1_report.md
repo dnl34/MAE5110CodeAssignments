@@ -6,9 +6,9 @@ The rimless wheel model was tested to verify the continuous dynamics and the imp
 ### Continuous Dynamics Check
 During the continuous portion of each step, the rimless wheel follows the inverted pendulum dynamics
 
-\[
+$$
 \ddot{\theta} = \frac{g}{l}\sin(\theta).
-\]
+$$
 
 The sign of the angular acceleration was checked at different angles. For `θ < 0`, representing the region where the spoke first contacts the ground to the vertical position, the angular acceleration is negative as expected, meaning the wheel is slowing as it reaches the vertical position. For `θ > 0`, representing the region from the vertical position until the reset when the next spoke contacts the ground, the angular acceleration is positive also as expected, with the wheel accelerating toward the next impact. 
 
@@ -64,7 +64,7 @@ The region of attraction was estimated by simulating the rimless wheel over a gr
 
 The resulting region of attraction is shown below. The plot demonstrates that sustained rolling depends on both the initial angular position and angular velocity. Initial conditions with certain angular velocities do not provide enough energy for the wheel to pass through the vertical position and continue to the next impact. Other initial conditions converge toward stable rolling.
 
-![Baseline Region of Attraction](figures/INSERT_BASELINE_ROA_FILENAME.png)
+![Baseline Region of Attraction](plots/roa_limit_cycle.png)
 
 The boundary between successful and unsuccessful initial conditions  represents an estimate of the region of attraction of the rolling motion. The grid of initial conditions plotted give an approximation for which values are within the region of attraction.
 
@@ -87,7 +87,7 @@ The return map for the baseline rimless wheel is shown below along with the iden
 \dot{\theta}_{k+1}^+ = \dot{\theta}_k^+.
 \]
 
-![Poincare Return Map](figures/INSERT_RETURN_MAP_FILENAME.png)
+![Poincare Return Map](plots/poincare_return_map.png)
 
 The intersection between the return map and the identity line represents a fixed point of the step-to-step dynamics. For the baseline parameters, the fixed point was estimated to be approximately
 
@@ -132,15 +132,15 @@ The effects of changing the ground inclination and the number of spokes were exa
 
 The slope angle was varied from \(10^\circ\) to \(30^\circ\) while keeping the number of spokes constant. The resulting regions of attraction are shown below.
 
-![RoA Slope 10 Degrees](figures/INSERT_SLOPE_10_ROA_FILENAME.png)
+![RoA Slope 10 Degrees](plots/roa_slope_10.png)
 
-![RoA Slope 15 Degrees](figures/INSERT_SLOPE_15_ROA_FILENAME.png)
+![RoA Slope 15 Degrees](plots/roa_slope_15.png)
 
-![RoA Slope 20 Degrees](figures/INSERT_SLOPE_20_ROA_FILENAME.png)
+![RoA Slope 20 Degrees](plots/roa_slope_20.png)
 
-![RoA Slope 25 Degrees](figures/INSERT_SLOPE_25_ROA_FILENAME.png)
+![RoA Slope 25 Degrees](plots/roa_slope_25.png)
 
-![RoA Slope 30 Degrees](figures/INSERT_SLOPE_30_ROA_FILENAME.png)
+![RoA Slope 30 Degrees](plots/roa_slope_30.png)
 
 At a slope of \(10^\circ\), none of the tested initial conditions converged to a sustained rolling gait. As the slope increased, a stable rolling region appeared and expanded. At \(15^\circ\), sustained rolling was possible for a limited range of initial conditions, while the regions of failure became progressively smaller at \(20^\circ\) and \(25^\circ\). At \(30^\circ\), nearly all of the tested initial conditions resulted in sustained rolling.
 
@@ -148,9 +148,9 @@ This trend occurs because increasing the downhill inclination increases the amou
 
 The Floquet multiplier was also calculated for each slope where a rolling fixed point existed.
 
-![Floquet Multiplier vs Slope](figures/INSERT_SLOPE_FLOQUET_FILENAME.png)
+![Floquet Multiplier vs Slope](plots/floquet_vs_slope.png)
 
-No valid rolling fixed point was found for the \(10^\circ\) case. For slopes from \(15^\circ\) to \(30^\circ\), the Floquet multipliers remained between \(0.24\) and \(0.27\). Since all of these values are less than one in magnitude, the corresponding periodic gaits are locally stable.
+No valid rolling fixed point was found for the \(10^\circ\) case. For slopes from \(15^\circ\) to \(30^\circ\), the Floquet multipliers remained between \(0.24\) and \(0.27\). Since all of these values are less than one in magnitude, the periodic gaits are locally stable.
 
 Although changing the slope had a large effect on the region of attraction, it had a relatively small effect on the local convergence rate once a continuous roll existed. This shows that the region of attraction describes which initial conditions reach the continuous roll, while the Floquet multiplier describes how nearby trajectories converge once they are close.
 
@@ -166,19 +166,19 @@ increasing the number of spokes decreases the angular spacing between consecutiv
 
 The regions of attraction for the different spoke counts are shown below.
 
-![RoA 6 Spokes](figures/INSERT_6_SPOKES_ROA_FILENAME.png)
+![RoA 6 Spokes](plots/roa_spokes_6.png)
 
-![RoA 7 Spokes](figures/INSERT_7_SPOKES_ROA_FILENAME.png)
+![RoA 7 Spokes](plots/roa_spokes_7.png)
 
-![RoA 8 Spokes](figures/INSERT_8_SPOKES_ROA_FILENAME.png)
+![RoA 8 Spokes](plots/roa_spokes_8.png)
 
-![RoA 9 Spokes](figures/INSERT_9_SPOKES_ROA_FILENAME.png)
+![RoA 9 Spokes](plots/roa_spokes_9.png)
 
-![RoA 10 Spokes](figures/INSERT_10_SPOKES_ROA_FILENAME.png)
+![RoA 10 Spokes](plots/roa_spokes_10.png)
 
-![RoA 11 Spokes](figures/INSERT_11_SPOKES_ROA_FILENAME.png)
+![RoA 11 Spokes](plots/roa_spokes_11.png)
 
-![RoA 12 Spokes](figures/INSERT_12_SPOKES_ROA_FILENAME.png)
+![RoA 12 Spokes](plots/roa_spokes_12.png)
 
 Changing the number of spokes changes the set of initial conditions that can reach the stable rolling gait. As the number of spokes increases, each individual step becomes shorter because \(\alpha\) decreases. The impact relationship
 
@@ -192,14 +192,6 @@ also changes. As \(N\) increases, \(2\alpha\) decreases and \(\cos(2\alpha)\) ap
 
 The effect of spoke count on the Floquet multiplier is shown below.
 
-![Floquet Multiplier vs Number of Spokes](figures/INSERT_SPOKES_FLOQUET_FILENAME.png)
+![Floquet Multiplier vs Number of Spokes](plots/floquet_vs_spokes.png)
 
 The fixed-point angular velocity increased from about \(1.49\) rad/s for six spokes to \(3.22\) rad/s for twelve spokes. The Floquet multiplier also increased from about \(0.25\) to \(0.76\). Since all of the multipliers remained below one, the rolling gait was still stable, but the higher values show that the wheel converged more slowly as the number of spokes increased. With more spokes, \(\cos(2\alpha)\) is closer to one, so less angular velocity is lost at each impact and disturbances also take longer to die out.
-
-
-## Running the Simulation
-
-The simulation can be run from the repository root using
-
-```bash
-python INSERT_MAIN_SCRIPT_FILENAME.py
