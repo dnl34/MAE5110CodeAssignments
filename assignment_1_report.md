@@ -15,23 +15,23 @@ The sign of the angular acceleration was checked at different angles. For `θ < 
 ### Reset Dynamics Check
 For `N = 6`,
 
-\[
+$$
 \alpha = \frac{\pi}{N} = 30^\circ.
-\]
+$$
 
 With `γ = 10°`, the expected impact angle is
 
-\[
+$$
 \theta^- = \gamma + \alpha = 40^\circ \approx 0.6981 \text{ rad}.
-\]
+$$
 
 The simulation detected impacts at approximately `0.6981 rad`, consistent with the expected impact condition.
 
 After impact, the stance leg changes and the angle is reset according to
 
-\[
+$$
 \theta^+ = \gamma - \alpha = -20^\circ \approx -0.3491 \text{ rad}.
-\]
+$$
 
 The simulation reset the angle to approximately `-0.3491 rad` after each impact.
 These angles align with the expected reset positioning given the chosen initial conditions
@@ -39,21 +39,21 @@ These angles align with the expected reset positioning given the chosen initial 
 ### Impact Event
 The angular velocity after impact is given by
 
-\[
+$$
 \dot{\theta}^+ = \dot{\theta}^-\cos(2\alpha).
-\]
+$$
 
 For `N = 6`, `cos(2α) = cos(60°) = 0.5`, so the angular velocity should be reduced by half at each impact. For example, the first simulated impact produced
 
-\[
+$$
 \dot{\theta}^- = 2.7216 \text{ rad/s}
-\]
+$$
 
 and
 
-\[
+$$
 \dot{\theta}^+ = 1.3608 \text{ rad/s},
-\]
+$$
 
 which agrees with the expected impact relationship.
 
@@ -71,35 +71,35 @@ The boundary between successful and unsuccessful initial conditions  represents 
 ## Return-Map Plot
 A Poincaré section was defined immediately after each impact. Since the post-impact angle is always reset to
 
-\[
+$$
 \theta^+ = \gamma - \alpha,
-\]
+$$
 
 the state on the Poincaré section can be represented using the post-impact angular velocity. The return map relates the angular velocity immediately after one impact to the angular velocity immediately after the following impact,
 
-\[
+$$
 \dot{\theta}_{k+1}^+ = P(\dot{\theta}_k^+).
-\]
+$$
 
 The return map for the baseline rimless wheel is shown below along with the identity line,
 
-\[
+$$
 \dot{\theta}_{k+1}^+ = \dot{\theta}_k^+.
-\]
+$$
 
 ![Poincare Return Map](plots/poincare_return_map.png)
 
 The intersection between the return map and the identity line represents a fixed point of the step-to-step dynamics. For the baseline parameters, the fixed point was estimated to be approximately
 
-\[
+$$
 \dot{\theta}^{*} \approx 1.5 \text{ rad/s}.
-\]
+$$
 
 This represents stable rolling because the post-impact angular velocity is approximately the same between steps.
 
 To determine the local stability of this roll, the post-impact angular velocity was perturbed slightly above and below the fixed point. The slope of the return map near the fixed point was approximated using
 
-\[
+$$
 \lambda \approx
 \frac{
 P(\dot{\theta}^{*}+\delta)
@@ -108,19 +108,19 @@ P(\dot{\theta}^{*}-\delta)
 }{
 2\delta
 }.
-\]
+$$
 
 Using a perturbation of \(\delta = 0.01\) rad/s gave a Floquet multiplier of approximately
 
-\[
+$$
 \lambda \approx 0.25.
-\]
+$$
 
 Since
 
-\[
+$$
 |\lambda| < 1,
-\]
+$$
 
 the rolling is locally stable. The magnitude of the multiplier also shows that perturbations decrease between steps, causing nearby trajectories to converge toward the stable roll.
 
@@ -158,9 +158,9 @@ Although changing the slope had a large effect on the region of attraction, it h
 
 The number of spokes was varied from \(N=6\) to \(N=12\) while keeping the ground inclination constant. Since
 
-\[
+$$
 \alpha = \frac{\pi}{N},
-\]
+$$
 
 increasing the number of spokes decreases the angular spacing between consecutive spokes and therefore changes both the continuous step geometry and the velocity loss at impact.
 
@@ -182,11 +182,11 @@ The regions of attraction for the different spoke counts are shown below.
 
 Changing the number of spokes changes the set of initial conditions that can reach the stable rolling gait. As the number of spokes increases, each individual step becomes shorter because \(\alpha\) decreases. The impact relationship
 
-\[
+$$
 \dot{\theta}^+
 =
 \dot{\theta}^-\cos(2\alpha)
-\]
+$$
 
 also changes. As \(N\) increases, \(2\alpha\) decreases and \(\cos(2\alpha)\) approaches one, meaning that a smaller fraction of angular velocity is lost at each impact.
 
