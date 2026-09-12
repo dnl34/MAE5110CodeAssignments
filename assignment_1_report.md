@@ -107,10 +107,10 @@ P(\dot{\theta}^{*}+\delta)
 P(\dot{\theta}^{*}-\delta)
 }{
 2\delta
-}.
+}
 $$
 
-Using a perturbation of \(\delta = 0.01\) rad/s gave a Floquet multiplier of approximately
+Using a perturbation of $\delta = 0.01\$ rad/s gave a Floquet multiplier of approximately
 
 $$
 \lambda \approx 0.25.
@@ -130,7 +130,7 @@ The effects of changing the ground inclination and the number of spokes were exa
 
 ### Effect of Ground Inclination
 
-The slope angle was varied from \(10^\circ\) to \(30^\circ\) while keeping the number of spokes constant. The resulting regions of attraction are shown below.
+The slope angle was varied from $10^\circ\) to \(30^\circ$ while keeping the number of spokes constant. The resulting regions of attraction are shown below.
 
 ![RoA Slope 10 Degrees](plots/roa_slope_10.png)
 
@@ -142,7 +142,7 @@ The slope angle was varied from \(10^\circ\) to \(30^\circ\) while keeping the n
 
 ![RoA Slope 30 Degrees](plots/roa_slope_30.png)
 
-At a slope of \(10^\circ\), none of the tested initial conditions converged to a sustained rolling gait. As the slope increased, a stable rolling region appeared and expanded. At \(15^\circ\), sustained rolling was possible for a limited range of initial conditions, while the regions of failure became progressively smaller at \(20^\circ\) and \(25^\circ\). At \(30^\circ\), nearly all of the tested initial conditions resulted in sustained rolling.
+At a slope of $10^\circ$, none of the tested initial conditions converged to a sustained rolling gait. As the slope increased, a stable rolling region appeared and expanded. At $15^\circ$, sustained rolling was possible for a limited range of initial conditions, while the regions of failure became progressively smaller at $20^\circ$ and $25^\circ$. At $30^\circ$, nearly all of the tested initial conditions resulted in sustained rolling.
 
 This trend occurs because increasing the downhill inclination increases the amount of gravitational energy available during each step. The additional energy makes it easier for the wheel to overcome the energy lost during the plastic impact and continue moving into the next step. Therefore, increasing the slope significantly increases the region of attraction of the rolling gait.
 
@@ -150,13 +150,13 @@ The Floquet multiplier was also calculated for each slope where a rolling fixed 
 
 ![Floquet Multiplier vs Slope](plots/floquet_vs_slope.png)
 
-No valid rolling fixed point was found for the \(10^\circ\) case. For slopes from \(15^\circ\) to \(30^\circ\), the Floquet multipliers remained between \(0.24\) and \(0.27\). Since all of these values are less than one in magnitude, the periodic gaits are locally stable.
+No valid rolling fixed point was found for the $10^\circ$ case. For slopes from $15^\circ$ to $30^\circ$, the Floquet multipliers remained between $0.24$ and $0.27$. Since all of these values are less than one in magnitude, the periodic gaits are locally stable.
 
 Although changing the slope had a large effect on the region of attraction, it had a relatively small effect on the local convergence rate once a continuous roll existed. This shows that the region of attraction describes which initial conditions reach the continuous roll, while the Floquet multiplier describes how nearby trajectories converge once they are close.
 
 ### Effect of Number of Spokes
 
-The number of spokes was varied from \(N=6\) to \(N=12\) while keeping the ground inclination constant. Since
+The number of spokes was varied from `N = 6` to `N = 12` while keeping the ground inclination constant. Since
 
 $$
 \alpha = \frac{\pi}{N},
@@ -180,18 +180,16 @@ The regions of attraction for the different spoke counts are shown below.
 
 ![RoA 12 Spokes](plots/roa_spokes_12.png)
 
-Changing the number of spokes changes the set of initial conditions that can reach the stable rolling gait. As the number of spokes increases, each individual step becomes shorter because \(\alpha\) decreases. The impact relationship
+Changing the number of spokes changes the set of initial conditions that can reach the stable rolling gait. As the number of spokes increases, each individual step becomes shorter because $\alpha$ decreases. The impact relationship
 
 $$
-\dot{\theta}^+
-=
-\dot{\theta}^-\cos(2\alpha)
+\dot{\theta}^+ = \dot{\theta}^-\cos(2\alpha)
 $$
 
-also changes. As \(N\) increases, \(2\alpha\) decreases and \(\cos(2\alpha)\) approaches one, meaning that a smaller fraction of angular velocity is lost at each impact.
+also changes. As `N` increases, $\alpha$ decreases and $\cos(2\alpha)$ approaches one, meaning that a smaller fraction of angular velocity is lost at each impact.
 
 The effect of spoke count on the Floquet multiplier is shown below.
 
 ![Floquet Multiplier vs Number of Spokes](plots/floquet_vs_spokes.png)
 
-The fixed-point angular velocity increased from about \(1.49\) rad/s for six spokes to \(3.22\) rad/s for twelve spokes. The Floquet multiplier also increased from about \(0.25\) to \(0.76\). Since all of the multipliers remained below one, the rolling gait was still stable, but the higher values show that the wheel converged more slowly as the number of spokes increased. With more spokes, \(\cos(2\alpha)\) is closer to one, so less angular velocity is lost at each impact and disturbances also take longer to die out.
+The fixed-point angular velocity increased from about `1.49 rad/s` for six spokes to `3.22 rad/s` for twelve spokes. The Floquet multiplier also increased from about `0.25` to `0.76`. Since all of the multipliers remained below one, the rolling gait was still stable, but the higher values show that the wheel converged more slowly as the number of spokes increased. With more spokes, $\cos(2\alpha)$ is closer to one, so less angular velocity is lost at each impact and disturbances also take longer to die out.
