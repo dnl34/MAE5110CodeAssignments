@@ -71,4 +71,114 @@ animation.save(output / "walker.gif", writer=PillowWriter(fps=fps))
 print(f"Saved {output / 'walker.gif'} ({completed_steps} footstrikes).")
 plt.show()
 
-# start code
+def feedback_linearization(state,params,damping):
+    gravity = params["gravity"]
+    length = params["length"]
+    mass = params["mass"]
+
+    angle = state[0]
+    angular_velocity = state[1]
+
+    ankle_torque = (-2 * mass * gravity * length
+        * np.sin(angle) - damping * angular_velocity)
+
+    min_torque = -0.1 * mass * gravity * length
+    max_torque = 0.05 * mass * gravity * length
+
+    ankle_torque = np.clip(ankle_torque, min_torque, max_torque)
+
+    return ankle_torque
+
+def test_feedback_controller(initial_state, params, damping):
+    params["ankle_torque"] = 0.0
+
+    timestep = 1e-4
+    sim_time = 5.0
+
+    state = initial_state.copy()
+
+    angle_stable_tolerance = 0.01
+    angular_velocity_stable_tolerance = 0.01
+
+    stable_time = 0.1
+    stable_steps_required = round(stable_time / timestep)
+    stable_steps = 0
+
+    for t in np.arange(0, sim_time, timestep):
+
+        params["ankle_torque"] = feedback_linearization(state, params, damping)
+
+        state = state + timestep * model.dynamics(t, state, params)
+
+        if (abs(state[0]) < angle_stable_tolerance and
+                abs(state[1]) < angular_velocity_stable_tolerance):
+            stable_steps += 1
+        else:
+            stable_steps = 0
+
+        if stable_steps >= stable_steps_required:
+            return True
+
+    return False
+
+# damping = 1.0
+
+# initial_state = np.array([0.02, 0.0])
+
+# result = test_feedback_controller(initial_state, params, damping)
+
+# print(result)
+
+def calculate_roa(params,damping):
+
+    angle_values = np.linspace(-0.15, 0.15, 30)
+    angular_velocity_values = np.linspace(-0.75, 0.75, 30)
+
+    roa = np.zeros((len(angular_velocity_values), len(angle_values)))
+
+    for i, angular_velocity in enumerate(angular_velocity_values):
+        for j, angle in enumerate(angle_values):
+
+            initial_state = np.array([angle, angular_velocity])
+
+            if test_feedback_controller(initial_state, params, damping):
+                roa[i, j] = 1
+
+    return angle_values, angular_velocity_values, roa
+
+damping = 1.0
+
+angle_values, angular_velocity_values, roa = calculate_roa(params, damping)
+
+plt.figure()
+
+plt.imshow(
+    roa,
+    origin="lower",
+    extent=[
+        angle_values[0],
+        angle_values[-1],
+        angular_velocity_values[0],
+        angular_velocity_values[-1]
+    ],
+    aspect="auto"
+)
+
+plt.xlabel("Angle (rad)")
+plt.ylabel("Angular Velocity (rad/s)")
+plt.title("Region of Attraction")
+plt.show()
+
+def roa_event_guard(state, angle_values, angular_velocity_values, roa):
+    angle = state[0]
+    angular_velocity = state[1]
+
+    if (angle < angle_values[0] or angle > angle_values[-1] or
+            angular_velocity < angular_velocity_values[0] or
+            angular_velocity > angular_velocity_values[-1]):
+        return False
+
+    angle_index = np.argmin(np.abs(angle_values - angle))
+    velocity_index = np.argmin(np.abs(angular_velocity_values - angular_velocity))
+
+    return roa[velocity_index, angle_index] == 1

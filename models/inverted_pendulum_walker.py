@@ -26,7 +26,7 @@ def dynamics(t, state, params):
     gravity = params["gravity"]
     length = params["length"]
     mass = params["mass"]
-    ankle_torque = params["anke_torque"]
+    ankle_torque = params["ankle_torque"]
 
     angle = state[0]
     angular_velocity = state[1]
